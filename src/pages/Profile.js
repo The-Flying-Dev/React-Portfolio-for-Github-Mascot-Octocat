@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Link from "../components/Link";
-import List from "../components/List";
+import { useState, useEffect } from 'react';
+import Link from '../components/Link';
+import List from '../components/List';
 import './Profile.css';
 
 function Profile({ userName }) {
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState({});
-
-  useEffect(() => {
-    async function fetchData() {
-      const profile = await fetch(`https://api.github.com/users/${userName}`);
-      const result = await profile.json();
-      if(result) {
-        setProfile(result);
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, [userName]);
 
   const items = [
     {
@@ -35,22 +23,37 @@ function Profile({ userName }) {
     { field: 'bio', value: profile.bio },
   ];
 
+  useEffect(() => {
+    async function fetchData() {
+      const profile = await fetch(`https://api.github.com/users/${userName}`);
+      const result = await profile.json();
+
+      if (result) {
+        setProfile(result);
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [userName]);
+
   return (
     <div className='Profile-container'>
-      <h2>About Me</h2>
-      {loading ? (<span>Loading...</span>) : (
+      <h2>About me</h2>
+      {loading ? (
+        <span>Loading...</span>
+      ) : (
         <div>
           <img
             className='Profile-avatar'
             src={profile.avatar_url}
             alt={profile.name}
-          />       
-        <List items={items} />
-    </div>
+          />
+          <List items={items} />
+        </div>
       )}
     </div>
   );
 }
 
 export default Profile;
-

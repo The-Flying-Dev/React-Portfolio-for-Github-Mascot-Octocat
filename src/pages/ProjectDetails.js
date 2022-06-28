@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Project({ userName }) {
@@ -12,11 +12,13 @@ function Project({ userName }) {
         `https://api.github.com/repos/${userName}/${name}`,
       );
       const result = await data.json();
+
       if (result) {
         setProject(result);
         setLoading(false);
       }
     }
+
     if (userName && name) {
       fetchData();
     }
