@@ -11,7 +11,7 @@ function Link({ url, title }) {
     >
       {title}
     </a>
-  )
+  );
 }
 
 export default Link;
